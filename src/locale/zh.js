@@ -1,0 +1,81 @@
+import { default as zhHans } from "vuetify/lib/locale/zh-Hans";
+
+export default {
+  $vuetify: { ...zhHans },
+  Hello: "Hello",
+
+  Home: "首页",
+  Swap: "兑换",
+  Pool: "流动池",
+  DAO: "DAO",
+  Node: "节点",
+  Relation: "关联关系",
+
+  Close: "关闭",
+  "No Data": "暂无数据",
+
+  "Connect Wallet": "连接钱包",
+  "Disconnect Wallet": "断开钱包连接",
+  "Current Token Address": "当前钱包地址",
+  "Account address copied successfully": "钱包地址复制成功",
+  Approve: "授权",
+  to: "到",
+  usdt: "USDT",
+  Claim: "提取",
+  "Approve Success": "授权成功",
+  "Claim Success": "提取成功",
+
+  "DAO is offical goverance token for DAOSWAP.":
+    "DAO是DAOSWAP官方社区治理代币。",
+  "DAT is PE credential to exchange DAO by staking DAT.":
+    "DAT是DAO的私募质押凭证，可以1比1兑换DAO。",
+  "Cope Success": "复制成功",
+
+  Status: "进展",
+  Beneficiary: "受益人地址",
+  Balance: "分期合约余额",
+  ReleasableAmount: "可提取金额",
+  Released: "已提取金额",
+  Start: "开始时间",
+  Duration: "释放周期",
+  "Receive Amount": "得到数量",
+  "Releasable Amount": "待释放",
+  "Released Amount": "已释放",
+
+  Just: "刚刚",
+  "minute ago": "分钟前",
+  "hour ago": "小时前",
+  "1 day ago": "1天前",
+  months: "月",
+  weeks: "周",
+  days: "天",
+  hours: "时",
+  minutes: "分钟",
+  seconds: "秒",
+
+  "At least": "最少",
+  "At mostest": "最多",
+  Operation: "操作",
+
+  "Whack A Mole": "打地鼠",
+  "Whack A Mole List": "参与记录",
+  "Whack A Mole Inviter": "邀请人奖励",
+  "Join Game Record": "参与游戏记录",
+
+  "Authorized quota": "已授权额度",
+  Join: "参与",
+  "Join Game": "参与游戏",
+  JoinForm: {
+    "The amount exceeds the allowance amount": "金额超过账户授权额度"
+  },
+  "Not within the join time frame": "不在参与时间范围内",
+  "This round has already been participated in": "此轮已参与",
+  "Join Success": "参与成功",
+
+  "List Round": "轮次",
+  "Start Time": "开始时间",
+  "Joined Number": "参与人数",
+  "Join Duration": "参与时间",
+  "Join Total Amount": "总参与数量",
+  "Inviter Reward Rate": "奖励比例"
+};
