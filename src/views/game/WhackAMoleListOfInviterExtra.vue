@@ -129,7 +129,7 @@ import { compare } from "@/filters/index";
 import GameWhackAMole_ABI from "@/constants/contractJson/GameWhackAMole_abi.json";
 
 export default {
-  name: "GameWhackAMoleListOfInviter",
+  name: "GameWhackAMoleListOfInviterExtra",
   data: () => ({
     loading: false,
     DAOAddress,
@@ -204,7 +204,7 @@ export default {
         this.web3
       );
       const resResult = await contract.methods
-        .getInviterRewardInfoList()
+        .getInviterRewardInfoListExtra()
         .call({ from: this.address });
 
       const getResult = resResult.map(async item => {

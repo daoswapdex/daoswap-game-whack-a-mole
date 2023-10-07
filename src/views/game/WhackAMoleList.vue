@@ -23,7 +23,10 @@
                   class="ma-2"
                 >
                   <v-card-title>
-                    {{ $t("Joined Number") }} - {{ item.accountList.length }}
+                    {{ $t("List Round") }}:
+                    {{ item.timestamp | parseTime("{y}{m}{d}") }}-{{
+                      item.timestampIndex
+                    }}
                   </v-card-title>
                   <v-divider class="mx-4"></v-divider>
                   <v-card-text>
@@ -33,9 +36,21 @@
                       }}
                     </p>
                     <p>
-                      {{ $t("Join Total Amount") }}：{{
-                        item.joinTotalAmount | keepNumber
+                      {{ $t("End Time") }}：{{
+                        item.endTime | parseTime("{y}-{m}-{d} {h}:{i}:{s}")
                       }}
+                    </p>
+                    <p>
+                      {{ $t("Selected or not") }}：
+                      <span
+                        v-if="item.isSelf"
+                        class="font-weight-bold red--text"
+                      >
+                        {{ $t("Selected Yes") }}
+                      </span>
+                      <span v-else class="font-weight-bold green--text">
+                        {{ $t("Selected No") }}
+                      </span>
                     </p>
                   </v-card-text>
                 </v-card>
@@ -214,16 +229,23 @@ export default {
         .call({ from: this.address });
 
       const getResult = resResult.map(async item => {
-        const tempData = {
-          accountList: item.accountList,
-          startTime: item.startTime,
-          endTime: item.endTime,
-          joinTotalAmount: weiToEther(item.joinTotalAmount, this.web3)
-        };
-        this.dataList.push(tempData);
+        if (item.isEnd) {
+          const tempData = {
+            accountList: item.accountList,
+            startTime: item.startTime,
+            endTime: item.endTime,
+            joinTotalAmount: weiToEther(item.joinTotalAmount, this.web3),
+            selectedAccount: item.selectedAccount,
+            isSelf:
+              item.selectedAccount.toLowerCase() === this.address.toLowerCase(),
+            timestamp: item.timestamp,
+            timestampIndex: item.timestampIndex
+          };
+          this.dataList.push(tempData);
+        }
       });
       await Promise.all(getResult);
-      this.dataList.sort(compare("startTime"));
+      this.dataList.sort(compare("endTime"));
 
       this.loading = false;
     }

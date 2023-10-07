@@ -3,6 +3,45 @@
     <v-container v-if="web3 && connected" class="fill-height">
       <v-row justify="center">
         <v-col md="6">
+          <!-- 公告 -->
+          <v-card justify="center" class="fill-width">
+            <v-card-title>
+              <span class="title font-weight-bold text-h5">
+                {{ $t("Game Info") }}
+              </span>
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <v-row align="center">
+                <v-col class="body-1" cols="12">
+                  <p>
+                    {{ $t("Number of DAOs required for participation") }}：{{
+                      joinAmount
+                    }}
+                    {{ tokenSymbol }}
+                  </p>
+                  <p>
+                    {{ $t("Game start time") }}：{{ startTime | formatSeconds }}
+                  </p>
+                  <p>
+                    {{ $t("Game end time") }}：{{ endTime | formatSeconds }}
+                  </p>
+                  <p>
+                    {{ $t("Number of participants per round") }}：{{
+                      maxNumberOfJoinPerRound
+                    }}
+                  </p>
+                  <p>
+                    {{ $t("Number of times participated on that day") }} /
+                    {{
+                      $t("Number of participation available on that day")
+                    }}：{{ timesOfJoin.joinedTimes }} /
+                    {{ timesOfJoin.canJoinTimes }}
+                  </p>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
           <!-- 操作 -->
           <v-card class="fill-width mt-10">
             <v-card outlined>
@@ -15,17 +54,32 @@
                 </span>
               </v-card-title>
               <v-divider></v-divider>
-              <v-card-text v-if="isOpen && !hasJoined">
+              <v-card-text>
                 <v-card-text>
                   <v-row align="center">
+                    <v-col class="subtitle-1" cols="12">
+                      {{ $t("Current round") }}:
+                      {{ currentDate | parseTime("{y}{m}{d}") }}-{{
+                        roundIdList.length + 1
+                      }}
+                    </v-col>
+                    <v-col class="subtitle-1" cols="12">
+                      {{ $t("Number of participants in this round") }}:
+                      {{ latestRoundInfo.length }} /
+                      {{ maxNumberOfJoinPerRound }}
+                    </v-col>
+                    <!-- <v-col class="subtitle-1" cols="12">
+                      {{ $t("Number of participation available on that day") }}:
+                      {{ timesOfJoin.canJoinTimes }}
+                    </v-col> -->
                     <v-col class="subtitle-1" cols="12">
                       {{ $t("Authorized quota") }}:
                       {{ accountAssets.allowanceAmount }}
                     </v-col>
                   </v-row>
                 </v-card-text>
-                <form>
-                  <v-card-text> </v-card-text>
+                <v-card-text> </v-card-text>
+                <form v-if="timesOfJoin.isCanJoin && isOpen && !hasJoined">
                   <v-card-actions class="justify-center">
                     <v-btn
                       large
@@ -50,18 +104,25 @@
                     </v-btn>
                   </v-card-actions>
                 </form>
-              </v-card-text>
-              <v-card-text v-else>
-                <v-row align="center">
+                <v-row align="center" v-else>
                   <v-col
-                    v-if="isOpen && hasJoined"
+                    v-if="timesOfJoin.isCanJoin"
                     class="subtitle-1"
                     cols="12"
                   >
-                    {{ $t("This round has already been participated in") }}
+                    <div v-if="isOpen && hasJoined">
+                      {{ $t("This round has already been participated in") }}
+                    </div>
+                    <div v-if="!isOpen">
+                      {{ $t("Not within the join time frame") }}
+                    </div>
                   </v-col>
-                  <v-col v-if="!isOpen" class="subtitle-1" cols="12">
-                    {{ $t("Not within the join time frame") }}
+                  <v-col v-else class="subtitle-1" cols="12">
+                    {{
+                      $t(
+                        "You have reached the number of times you can participate"
+                      )
+                    }}
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -158,9 +219,28 @@ export default {
     loading: false,
     DAOAddress,
     tokenSymbol: "DAO",
+    rewardTokenSymbol: "DST",
     // 表单数据
     joinToken: DAOAddress,
     joinAmount: 0,
+    maxNumberOfJoinPerRound: 0,
+    timesOfJoin: {
+      canJoinTimes: 0,
+      joinedTimes: 0,
+      isCanJoin: false
+    },
+    currentDate: 0,
+    roundIdList: [],
+    latestRoundInfo: {
+      accountList: []
+      // joinTotalAmount: 0,
+      // startTime: 0,
+      // endTime: 0,
+      // timestamp: 0,
+      // timestampIndex: 0,
+      // selectedAccount: 0,
+      // isEnd: false
+    },
     // 当前账户相关信息
     accountAssets: {
       balance: 0,
@@ -247,6 +327,9 @@ export default {
       this.joinToken = joinToken;
       const joinAmount = await contract.methods.joinAmount().call();
       this.joinAmount = weiToEther(joinAmount, this.web3);
+      this.maxNumberOfJoinPerRound = await contract.methods
+        .maxNumberOfJoinPerRound()
+        .call();
       // 查询当前账号余额
       const contractERC20 = getContractByABI(ERC20_abi, joinToken, this.web3);
       const balance = await contractERC20.methods
@@ -258,14 +341,36 @@ export default {
       this.accountAssets.balance = weiToEther(balance, this.web3);
       this.accountAssets.allowanceAmount = weiToEther(allowance, this.web3);
       this.tokenSymbol = await contractERC20.methods.symbol().call();
+      // 查询是否已参与本轮
       this.hasJoined = await contract.methods
         .hasJoined()
         .call({ from: this.address });
+      // 查询参与次数
+      const timesOfJoin = await contract.methods.getTimesOfJoin().call({
+        from: this.address
+      });
+      this.timesOfJoin.canJoinTimes = parseInt(timesOfJoin[0]);
+      this.timesOfJoin.joinedTimes = parseInt(timesOfJoin[1]);
+      this.timesOfJoin.isCanJoin = timesOfJoin[2];
+      // 查询今天所有轮次ID列表
+      this.roundIdList = await contract.methods
+        .getRoundIdListByTimestamp(0)
+        .call();
+      // 查询本轮次信息
+      const latestRoundId = await contract.methods.getLatestRoundId().call();
+      const latestRoundInfo = await contract.methods
+        .getRoundInfoById(latestRoundId)
+        .call();
+      this.latestRoundInfo = latestRoundInfo.accountList;
       // get start time
       this.startTime = await contract.methods.startTime().call();
       // get end time
       this.endTime = await contract.methods.endTime().call();
       const currentDate = new Date();
+      this.currentDate = currentDate
+        .getTime()
+        .toString()
+        .substring(0, 10);
       const hoursNumber =
         parseInt(currentDate.getHours()) * 60 * 60 +
         parseInt(currentDate.getMinutes()) * 60 +

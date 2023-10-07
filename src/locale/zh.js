@@ -60,6 +60,7 @@ export default {
   "Whack A Mole": "打地鼠",
   "Whack A Mole List": "参与记录",
   "Whack A Mole Inviter": "邀请人奖励",
+  "Whack A Mole Inviter Extra": "邀请人额外奖励",
   "Join Game Record": "参与游戏记录",
 
   "Authorized quota": "已授权额度",
@@ -70,12 +71,28 @@ export default {
   },
   "Not within the join time frame": "不在参与时间范围内",
   "This round has already been participated in": "此轮已参与",
+  "You have reached the number of times you can participate":
+    "已达到可参与次数",
   "Join Success": "参与成功",
 
   "List Round": "轮次",
   "Start Time": "开始时间",
+  "End Time": "结束时间",
   "Joined Number": "参与人数",
   "Join Duration": "参与时间",
   "Join Total Amount": "总参与数量",
-  "Inviter Reward Rate": "奖励比例"
+  "Inviter Reward Amount": "奖励数量",
+  "Selected or not": "是否被选中",
+  "Selected Yes": "是",
+  "Selected No": "否",
+
+  "Game Info": "游戏信息",
+  "Number of DAOs required for participation": "参与所需的DAO数量",
+  "Game start time": "游戏开始时间",
+  "Game end time": "游戏结束时间",
+  "Number of participants per round": "每轮参与人数",
+  "Current round": "当前轮次",
+  "Number of times participated on that day": "已参与次数",
+  "Number of participation available on that day": "可参与次数",
+  "Number of participants in this round": "本轮参与人数"
 };

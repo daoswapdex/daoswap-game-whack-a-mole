@@ -50,6 +50,14 @@
             text
             >{{ $t("Whack A Mole Inviter") }}</v-tab
           >
+          <v-tab
+            to="/whack-a-mole/inviter-extra"
+            :ripple="false"
+            class="font-weight-bold"
+            min-width="96"
+            text
+            >{{ $t("Whack A Mole Inviter Extra") }}</v-tab
+          >
         </v-tabs>
       </div>
 
@@ -85,6 +93,11 @@
           <v-list-item to="/whack-a-mole/inviter">
             <v-list-item-title>{{
               $t("Whack A Mole Inviter")
+            }}</v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/whack-a-mole/inviter-extra">
+            <v-list-item-title>{{
+              $t("Whack A Mole Inviter Extra")
             }}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>

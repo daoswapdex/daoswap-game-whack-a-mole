@@ -60,6 +60,7 @@ export default {
   "Whack A Mole": "Whack A Mole",
   "Whack A Mole List": "Joined Record",
   "Whack A Mole Inviter": "Inviter Reward",
+  "Whack A Mole Inviter Extra": "Inviter Extra Reward",
   "Join Game Record": "Join Game Record",
 
   "Authorized quota": "Authorized quota",
@@ -72,12 +73,29 @@ export default {
   "Not within the join time frame": "Not within the join time frame",
   "This round has already been participated in":
     "This round has already been participated in",
+  "You have reached the number of times you can participate":
+    "You have reached the number of times you can participate",
   "Join Success": "Join Success",
 
   "List Round": "Round",
   "Start Time": "Start Time",
+  "End Time": "End Time",
   "Joined Number": "Joined Number",
   "Join Duration": "Join Duration",
   "Join Total Amount": "Join Total Amount",
-  "Inviter Reward Rate": "Reward Rate"
+  "Inviter Reward Amount": "Reward Amount",
+  "Selected or not": "Selected or not",
+  "Selected Yes": "Yes",
+  "Selected No": "No",
+
+  "Game Info": "Game Info",
+  "Number of DAOs required for participation":
+    "Number of DAOs required for participation",
+  "Game start time": "Game start time",
+  "Game end time": "Game end time",
+  "Number of participants per round": "Number of participants per round",
+  "Current round": "Current round",
+  "Number of times participated on that day": "Joined Number",
+  "Number of participation available on that day": "Can Join Number",
+  "Number of participants in this round": "Number of participants in this round"
 };
