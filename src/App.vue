@@ -9,7 +9,7 @@ export default {
   name: "App",
   metaInfo: {
     title: "Daoswap",
-    titleTemplate: "%s | Daoswap Dex",
+    titleTemplate: "%s | Daoswap Game",
     htmlAttrs: { lang: "en" },
     meta: [
       { charset: "utf-8" },
