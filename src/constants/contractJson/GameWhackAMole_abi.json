@@ -134,77 +134,7 @@
   },
   {
     "inputs": [],
-    "name": "communityMiningAmount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "communityMiningWallet",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
     "name": "currentDayTimestamp",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "endTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "flowAllocationMaxLevel",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "flowAllocationRatio",
     "outputs": [
       {
         "internalType": "uint256",
@@ -354,6 +284,20 @@
   },
   {
     "inputs": [],
+    "name": "lasterJoinerExtraAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [],
     "name": "maxJoinTimes",
     "outputs": [
       {
@@ -402,20 +346,6 @@
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "rateDenominator",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -533,32 +463,6 @@
         "type": "uint256"
       }
     ],
-    "name": "setCommunityMiningAmount",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_wallet",
-        "type": "address"
-      }
-    ],
-    "name": "setCommunityMiningWallet",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_amount",
-        "type": "uint256"
-      }
-    ],
     "name": "setDFTRewardAmount",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -573,45 +477,6 @@
       }
     ],
     "name": "setDFTRewardWallet",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_endTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "setEndTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_level",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFlowAllocationMaxLevel",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_ratio",
-        "type": "uint256"
-      }
-    ],
-    "name": "setFlowAllocationRatio",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -651,6 +516,19 @@
       }
     ],
     "name": "setJoinBackAmount",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setLasterJoinerExtraAmount",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -736,19 +614,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_startTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "setStartTime",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_wallet",
         "type": "address"
@@ -758,20 +623,6 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "startTime",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
   },
   {
     "inputs": [
@@ -819,191 +670,6 @@
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getParticipantsList",
-    "outputs": [
-      {
-        "internalType": "address[]",
-        "name": "",
-        "type": "address[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getRoundListByAccount",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address[]",
-            "name": "accountList",
-            "type": "address[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "joinTotalAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestampIndex",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "selectedAccount",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEnd",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct GameWhackAMole.RoundInfo[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getInviterInfoListByAccount",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "roundId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct GameWhackAMole.InviterRewardInfoOfSingle[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getInviterInfoListExtraByAccount",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "roundId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct GameWhackAMole.InviterRewardInfoOfSingle[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_timestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "getTimesOfJoinByAccount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
   },
   {
     "inputs": [],
@@ -1056,44 +722,19 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "roundId",
+            "type": "uint256"
+          },
+          {
             "internalType": "address[]",
             "name": "accountList",
             "type": "address[]"
           },
           {
-            "internalType": "uint256",
-            "name": "joinTotalAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestampIndex",
-            "type": "uint256"
-          },
-          {
             "internalType": "address",
             "name": "selectedAccount",
             "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEnd",
-            "type": "bool"
           }
         ],
         "internalType": "struct GameWhackAMole.RoundInfo",
@@ -1112,44 +753,19 @@
       {
         "components": [
           {
+            "internalType": "uint256",
+            "name": "roundId",
+            "type": "uint256"
+          },
+          {
             "internalType": "address[]",
             "name": "accountList",
             "type": "address[]"
           },
           {
-            "internalType": "uint256",
-            "name": "joinTotalAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestampIndex",
-            "type": "uint256"
-          },
-          {
             "internalType": "address",
             "name": "selectedAccount",
             "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEnd",
-            "type": "bool"
           }
         ],
         "internalType": "struct GameWhackAMole.RoundInfo[]",
@@ -1163,198 +779,27 @@
   },
   {
     "inputs": [],
-    "name": "getRoundIdListOfCurrentDayJoined",
+    "name": "getTotalAmountInfo",
     "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getTimestampList",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
       {
         "internalType": "uint256",
-        "name": "_timestamp",
-        "type": "uint256"
-      }
-    ],
-    "name": "getRoundInfoListByTimestamp",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address[]",
-            "name": "accountList",
-            "type": "address[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "joinTotalAmount",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "startTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "endTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestamp",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "timestampIndex",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "selectedAccount",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isEnd",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct GameWhackAMole.RoundInfo[]",
         "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
-        "name": "_timestamp",
+        "name": "",
         "type": "uint256"
-      }
-    ],
-    "name": "getRoundIdListByTimestamp",
-    "outputs": [
+      },
       {
-        "internalType": "uint256[]",
+        "internalType": "uint256",
         "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getInviterRewardInfoList",
-    "outputs": [
+        "type": "uint256"
+      },
       {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "roundId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct GameWhackAMole.InviterRewardInfoOfSingle[]",
+        "internalType": "uint256",
         "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getInviterRewardInfoListExtra",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "roundId",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "amount",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct GameWhackAMole.InviterRewardInfoOfSingle[]",
-        "name": "",
-        "type": "tuple[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getInviterTimestampList",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function",
-    "constant": true
-  },
-  {
-    "inputs": [],
-    "name": "getInviterTimestampListExtra",
-    "outputs": [
-      {
-        "internalType": "uint256[]",
-        "name": "",
-        "type": "uint256[]"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

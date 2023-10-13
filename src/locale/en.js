@@ -78,6 +78,7 @@ export default {
   "Join Success": "Join Success",
 
   "List Round": "Round",
+  "List Round Timestamp": "Time",
   "Start Time": "Start Time",
   "End Time": "End Time",
   "Joined Number": "Joined Number",
@@ -97,5 +98,17 @@ export default {
   "Current round": "Current round",
   "Number of times participated on that day": "Joined Number",
   "Number of participation available on that day": "Can Join Number",
-  "Number of participants in this round": "Number of participants in this round"
+  "Number of participants in this round":
+    "Number of participants in this round",
+
+  "Reward Total Amount": "Reward Total Amount",
+  "Extra Reward Total Amount": "Reward Total Amount",
+
+  "Total Amount Info": "Total Amount Info",
+  "Total Amount": {
+    "total join amount": "Total Join Amount",
+    "total join back amount": "Total Join Back Amount",
+    "total join reward amount": "Total Join Reward Amount",
+    "total inviter reward amount": "Total Inviter Reward Amount"
+  }
 };

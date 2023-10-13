@@ -15,12 +15,30 @@
                 </span>
               </v-card-title>
               <v-divider></v-divider>
-              <v-card-text>
+              <v-card-text v-if="dataList.length > 0">
+                <v-card
+                  v-for="item in dataList"
+                  :key="item.timestamp"
+                  :loading="loading"
+                  class="ma-2"
+                >
+                  <v-card-title>
+                    {{ $t("List Round Timestamp") }} -
+                    {{ item.timestamp | parseTime("{y}-{m}-{d}") }}
+                  </v-card-title>
+                  <v-divider class="mx-4"></v-divider>
+                  <v-card-text>
+                    <p>
+                      {{ $t("Inviter Reward Amount") }}：{{ item.amount }}
+                      {{ tokenSymbol }}
+                    </p>
+                  </v-card-text>
+                </v-card>
+              </v-card-text>
+              <v-card-text v-else>
                 <v-row align="center">
                   <v-col class="body-3" cols="12">
-                    {{ $t("Reward Total Amount") }}:
-                    {{ rewardTotalAmount }}
-                    {{ tokenSymbol }}
+                    {{ $t("No Data") }}
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -106,6 +124,7 @@
 import clip from "@/utils/clipboard";
 import { DAOAddress, WhackAMoleContractAddress } from "@/constants";
 import { getContractByABI, weiToEther } from "@/utils/web3";
+import { compare } from "@/filters/index";
 // 引入合约 ABI 文件
 import GameWhackAMole_ABI from "@/constants/contractJson/GameWhackAMole_abi.json";
 
@@ -116,7 +135,7 @@ export default {
     DAOAddress,
     tokenSymbol: "DAO",
     // 数据列表
-    rewardTotalAmount: 0,
+    dataList: [],
     // 提示框
     operationResult: {
       color: "success",
@@ -152,6 +171,7 @@ export default {
     },
     address() {
       return this.$store.state.web3.address;
+      // return "0xCD4BBF4FB76d400Eab42B9e530BB98BC72fFC20E";
     }
   },
   methods: {
@@ -176,16 +196,31 @@ export default {
     },
     // 获取数据列表
     async getDataList() {
+      this.dataList = [];
       this.loading = true;
       const contract = getContractByABI(
         GameWhackAMole_ABI,
         WhackAMoleContractAddress,
         this.web3
       );
-      const rewardTotalAmount = await contract.methods
-        .getInviterRewardTotalAmount()
+      const timestampList = await contract.methods
+        .getInviterTimestampList()
         .call({ from: this.address });
-      this.rewardTotalAmount = weiToEther(rewardTotalAmount, this.web3);
+
+      const getResult = timestampList.map(async item => {
+        const amount = await contract.methods
+          .getInviterRewardAmount(item)
+          .call({
+            from: this.address
+          });
+        const tempData = {
+          timestamp: item,
+          amount: weiToEther(amount, this.web3)
+        };
+        this.dataList.push(tempData);
+      });
+      await Promise.all(getResult);
+      this.dataList.sort(compare("timestamp"));
 
       this.loading = false;
     }

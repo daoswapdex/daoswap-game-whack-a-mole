@@ -76,6 +76,7 @@ export default {
   "Join Success": "参与成功",
 
   "List Round": "轮次",
+  "List Round Timestamp": "日期",
   "Start Time": "开始时间",
   "End Time": "结束时间",
   "Joined Number": "参与人数",
@@ -94,5 +95,16 @@ export default {
   "Current round": "当前轮次",
   "Number of times participated on that day": "已参与次数",
   "Number of participation available on that day": "可参与次数",
-  "Number of participants in this round": "本轮参与人数"
+  "Number of participants in this round": "本轮参与人数",
+
+  "Reward Total Amount": "总奖励金额",
+  "Extra Reward Total Amount": "总奖励金额",
+
+  "Total Amount Info": "总金额信息",
+  "Total Amount": {
+    "total join amount": "总参与金额",
+    "total join back amount": "总参与奖励金额",
+    "total join reward amount": "总奖励金额",
+    "total inviter reward amount": "总邀请奖励金额"
+  }
 };

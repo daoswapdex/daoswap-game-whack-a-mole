@@ -15,26 +15,12 @@
                 </span>
               </v-card-title>
               <v-divider></v-divider>
-              <v-card-text v-if="dataList.length > 0">
-                <v-card
-                  v-for="item in dataList"
-                  :key="item.account"
-                  :loading="loading"
-                  class="ma-2"
-                >
-                  <v-card-title>
-                    {{ $t("List Round") }} - {{ item.roundId }}
-                  </v-card-title>
-                  <v-divider class="mx-4"></v-divider>
-                  <v-card-text>
-                    <p>{{ $t("Inviter Reward Amount") }}：{{ item.amount }}</p>
-                  </v-card-text>
-                </v-card>
-              </v-card-text>
-              <v-card-text v-else>
+              <v-card-text>
                 <v-row align="center">
                   <v-col class="body-3" cols="12">
-                    {{ $t("No Data") }}
+                    {{ $t("Extra Reward Total Amount") }}:
+                    {{ rewardTotalAmount }}
+                    {{ tokenSymbol }}
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -118,13 +104,8 @@
 
 <script>
 import clip from "@/utils/clipboard";
-import {
-  DAOAddress,
-  WhackAMoleContractAddress,
-  ZeroAddress
-} from "@/constants";
+import { DAOAddress, WhackAMoleContractAddress } from "@/constants";
 import { getContractByABI, weiToEther } from "@/utils/web3";
-import { compare } from "@/filters/index";
 // 引入合约 ABI 文件
 import GameWhackAMole_ABI from "@/constants/contractJson/GameWhackAMole_abi.json";
 
@@ -135,7 +116,7 @@ export default {
     DAOAddress,
     tokenSymbol: "DAO",
     // 数据列表
-    dataList: [],
+    rewardTotalAmount: 0,
     // 提示框
     operationResult: {
       color: "success",
@@ -196,28 +177,16 @@ export default {
     },
     // 获取数据列表
     async getDataList() {
-      this.dataList = [];
       this.loading = true;
       const contract = getContractByABI(
         GameWhackAMole_ABI,
         WhackAMoleContractAddress,
         this.web3
       );
-      const resResult = await contract.methods
-        .getInviterRewardInfoListExtra()
+      const rewardTotalAmount = await contract.methods
+        .getExtraInviterRewardAmount()
         .call({ from: this.address });
-
-      const getResult = resResult.map(async item => {
-        if (item.account != ZeroAddress) {
-          const tempData = {
-            roundId: item.roundId,
-            amount: weiToEther(item.amount, this.web3)
-          };
-          this.dataList.push(tempData);
-        }
-      });
-      await Promise.all(getResult);
-      this.dataList.sort(compare("roundId"));
+      this.rewardTotalAmount = weiToEther(rewardTotalAmount, this.web3);
 
       this.loading = false;
     }

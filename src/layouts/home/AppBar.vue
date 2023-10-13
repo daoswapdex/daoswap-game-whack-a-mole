@@ -27,7 +27,7 @@
           background-color="transparent"
         >
           <v-tab
-            to="/whack-a-mole"
+            to="/whack-a-mole/join"
             :ripple="false"
             class="font-weight-bold"
             min-width="96"
@@ -42,22 +42,22 @@
             text
             >{{ $t("Whack A Mole List") }}</v-tab
           >
-          <v-tab
+          <!-- <v-tab
             to="/whack-a-mole/inviter"
             :ripple="false"
             class="font-weight-bold"
             min-width="96"
             text
             >{{ $t("Whack A Mole Inviter") }}</v-tab
-          >
-          <v-tab
+          > -->
+          <!-- <v-tab
             to="/whack-a-mole/inviter-extra"
             :ripple="false"
             class="font-weight-bold"
             min-width="96"
             text
             >{{ $t("Whack A Mole Inviter Extra") }}</v-tab
-          >
+          > -->
         </v-tabs>
       </div>
 
@@ -84,22 +84,22 @@
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list shaped>
         <v-list-item-group v-model="group" color="#93B954">
-          <v-list-item to="/whack-a-mole">
+          <v-list-item to="/whack-a-mole/join">
             <v-list-item-title>{{ $t("Whack A Mole") }}</v-list-item-title>
           </v-list-item>
           <v-list-item to="/whack-a-mole/list">
             <v-list-item-title>{{ $t("Whack A Mole List") }}</v-list-item-title>
           </v-list-item>
-          <v-list-item to="/whack-a-mole/inviter">
+          <!-- <v-list-item to="/whack-a-mole/inviter">
             <v-list-item-title>{{
               $t("Whack A Mole Inviter")
             }}</v-list-item-title>
-          </v-list-item>
-          <v-list-item to="/whack-a-mole/inviter-extra">
+          </v-list-item> -->
+          <!-- <v-list-item to="/whack-a-mole/inviter-extra">
             <v-list-item-title>{{
               $t("Whack A Mole Inviter Extra")
             }}</v-list-item-title>
-          </v-list-item>
+          </v-list-item> -->
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>

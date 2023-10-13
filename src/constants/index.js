@@ -1,5 +1,5 @@
 export const WhackAMoleContractAddress =
-  "0x28f8dE3388B303E58d4F378e9fA30d9F53dE0A78";
+  "0xb3eC88EEC8a0B824A48480d0f570A9167beFE559";
 
 /********** base **********/
 export const DAOAddress = "0xc096332CAacF00319703558988aD03eC6586e704";

@@ -21,12 +21,6 @@
                     {{ tokenSymbol }}
                   </p>
                   <p>
-                    {{ $t("Game start time") }}：{{ startTime | formatSeconds }}
-                  </p>
-                  <p>
-                    {{ $t("Game end time") }}：{{ endTime | formatSeconds }}
-                  </p>
-                  <p>
                     {{ $t("Number of participants per round") }}：{{
                       maxNumberOfJoinPerRound
                     }}
@@ -58,20 +52,10 @@
                 <v-card-text>
                   <v-row align="center">
                     <v-col class="subtitle-1" cols="12">
-                      {{ $t("Current round") }}:
-                      {{ currentDate | parseTime("{y}{m}{d}") }}-{{
-                        roundIdList.length + 1
-                      }}
-                    </v-col>
-                    <v-col class="subtitle-1" cols="12">
                       {{ $t("Number of participants in this round") }}:
-                      {{ latestRoundInfo.length }} /
+                      {{ latestRoundInfo.accountList.length }} /
                       {{ maxNumberOfJoinPerRound }}
                     </v-col>
-                    <!-- <v-col class="subtitle-1" cols="12">
-                      {{ $t("Number of participation available on that day") }}:
-                      {{ timesOfJoin.canJoinTimes }}
-                    </v-col> -->
                     <v-col class="subtitle-1" cols="12">
                       {{ $t("Authorized quota") }}:
                       {{ accountAssets.allowanceAmount }}
@@ -79,7 +63,7 @@
                   </v-row>
                 </v-card-text>
                 <v-card-text> </v-card-text>
-                <form v-if="timesOfJoin.isCanJoin && isOpen && !hasJoined">
+                <form v-if="timesOfJoin.isCanJoin && !hasJoined">
                   <v-card-actions class="justify-center">
                     <v-btn
                       large
@@ -105,24 +89,17 @@
                   </v-card-actions>
                 </form>
                 <v-row align="center" v-else>
-                  <v-col
-                    v-if="timesOfJoin.isCanJoin"
-                    class="subtitle-1"
-                    cols="12"
-                  >
-                    <div v-if="isOpen && hasJoined">
+                  <v-col class="subtitle-1" cols="12">
+                    <div v-if="timesOfJoin.isCanJoin && hasJoined">
                       {{ $t("This round has already been participated in") }}
                     </div>
-                    <div v-if="!isOpen">
-                      {{ $t("Not within the join time frame") }}
+                    <div v-if="!timesOfJoin.isCanJoin">
+                      {{
+                        $t(
+                          "You have reached the number of times you can participate"
+                        )
+                      }}
                     </div>
-                  </v-col>
-                  <v-col v-else class="subtitle-1" cols="12">
-                    {{
-                      $t(
-                        "You have reached the number of times you can participate"
-                      )
-                    }}
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -208,7 +185,6 @@
 import clip from "@/utils/clipboard";
 import { DAOAddress, WhackAMoleContractAddress } from "@/constants";
 import { getContractByABI, weiToEther, etherToWei } from "@/utils/web3";
-import { JSBI } from "@/utils/jsbi";
 // 引入合约 ABI 文件
 import ERC20_abi from "@/constants/contractJson/ERC20_abi.json";
 import GameWhackAMole_ABI from "@/constants/contractJson/GameWhackAMole_abi.json";
@@ -230,16 +206,8 @@ export default {
       isCanJoin: false
     },
     currentDate: 0,
-    roundIdList: [],
     latestRoundInfo: {
       accountList: []
-      // joinTotalAmount: 0,
-      // startTime: 0,
-      // endTime: 0,
-      // timestamp: 0,
-      // timestampIndex: 0,
-      // selectedAccount: 0,
-      // isEnd: false
     },
     // 当前账户相关信息
     accountAssets: {
@@ -247,11 +215,7 @@ export default {
       allowanceAmount: 0
     },
     // 合约数据
-    currentDayTimestamp: 0,
-    startTime: 0,
-    endTime: 0,
     hasJoined: false,
-    isOpen: false,
     // 提示框
     operationResult: {
       color: "success",
@@ -352,38 +316,12 @@ export default {
       this.timesOfJoin.canJoinTimes = parseInt(timesOfJoin[0]);
       this.timesOfJoin.joinedTimes = parseInt(timesOfJoin[1]);
       this.timesOfJoin.isCanJoin = timesOfJoin[2];
-      // 查询今天所有轮次ID列表
-      this.roundIdList = await contract.methods
-        .getRoundIdListByTimestamp(0)
-        .call();
       // 查询本轮次信息
       const latestRoundId = await contract.methods.getLatestRoundId().call();
       const latestRoundInfo = await contract.methods
         .getRoundInfoById(latestRoundId)
         .call();
-      this.latestRoundInfo = latestRoundInfo.accountList;
-      // get start time
-      this.startTime = await contract.methods.startTime().call();
-      // get end time
-      this.endTime = await contract.methods.endTime().call();
-      const currentDate = new Date();
-      this.currentDate = currentDate
-        .getTime()
-        .toString()
-        .substring(0, 10);
-      const hoursNumber =
-        parseInt(currentDate.getHours()) * 60 * 60 +
-        parseInt(currentDate.getMinutes()) * 60 +
-        parseInt(currentDate.getSeconds());
-      this.isOpen =
-        JSBI.lessThanOrEqual(
-          JSBI.BigInt(this.startTime),
-          JSBI.BigInt(hoursNumber)
-        ) &&
-        JSBI.greaterThanOrEqual(
-          JSBI.BigInt(this.endTime),
-          JSBI.BigInt(hoursNumber)
-        );
+      this.latestRoundInfo.accountList = latestRoundInfo.accountList;
     },
     // 授权
     handleApprove() {

@@ -3,6 +3,37 @@
     <v-container v-if="web3 && connected" class="fill-height">
       <v-row justify="center">
         <v-col md="6">
+          <!-- 公告 -->
+          <v-card justify="center" class="fill-width">
+            <v-card-title>
+              <span class="title font-weight-bold text-h5">
+                {{ $t("Total Amount Info") }}
+              </span>
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              <v-row align="center">
+                <v-col class="body-1" cols="12">
+                  <p>
+                    {{ $t("Total Amount.total join amount") }}：
+                    {{ totalAmount.totalJoinAmount }} DAO
+                  </p>
+                  <p>
+                    {{ $t("Total Amount.total join back amount") }}：
+                    {{ totalAmount.totalJoinBackAmount }} DAO
+                  </p>
+                  <p>
+                    {{ $t("Total Amount.total join reward amount") }}：
+                    {{ totalAmount.totalJoinRewardAmount }} DST
+                  </p>
+                  <p>
+                    {{ $t("Total Amount.total inviter reward amount") }}：
+                    {{ totalAmount.totalInviterRewardAmount }} DAO
+                  </p>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
           <!-- 操作 -->
           <v-card class="fill-width mt-10">
             <v-card outlined>
@@ -15,53 +46,41 @@
                 </span>
               </v-card-title>
               <v-divider></v-divider>
-              <v-card-text v-if="dataList.length > 0">
-                <v-card
-                  v-for="item in dataList"
-                  :key="item.account"
-                  :loading="loading"
-                  class="ma-2"
-                >
-                  <v-card-title>
-                    {{ $t("List Round") }}:
-                    {{ item.timestamp | parseTime("{y}{m}{d}") }}-{{
-                      item.timestampIndex
-                    }}
-                  </v-card-title>
-                  <v-divider class="mx-4"></v-divider>
-                  <v-card-text>
-                    <p>
-                      {{ $t("Start Time") }}：{{
-                        item.startTime | parseTime("{y}-{m}-{d} {h}:{i}:{s}")
-                      }}
-                    </p>
-                    <p>
-                      {{ $t("End Time") }}：{{
-                        item.endTime | parseTime("{y}-{m}-{d} {h}:{i}:{s}")
-                      }}
-                    </p>
-                    <p>
-                      {{ $t("Selected or not") }}：
-                      <span
-                        v-if="item.isSelf"
-                        class="font-weight-bold red--text"
-                      >
-                        {{ $t("Selected Yes") }}
-                      </span>
-                      <span v-else class="font-weight-bold green--text">
-                        {{ $t("Selected No") }}
-                      </span>
-                    </p>
-                  </v-card-text>
-                </v-card>
-              </v-card-text>
-              <v-card-text v-else>
-                <v-row align="center">
-                  <v-col class="body-3" cols="12">
-                    {{ $t("No Data") }}
-                  </v-col>
-                </v-row>
-              </v-card-text>
+              <v-simple-table style="width: 100%;">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">
+                        {{ $t("List Round") }}
+                      </th>
+                      <th class="text-left">
+                        {{ $t("Selected or not") }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <template v-if="dataList.length > 0">
+                      <tr v-for="item in dataList" :key="item.roundId">
+                        <td>
+                          {{ item.roundId }}
+                        </td>
+                        <td :style="`color: ${item.isSelf ? 'red' : 'green'};`">
+                          {{
+                            item.isSelf ? $t("Selected Yes") : $t("Selected No")
+                          }}
+                        </td>
+                      </tr>
+                    </template>
+                    <template v-else>
+                      <tr>
+                        <td colspan="4" align="center">
+                          {{ $t("No Data") }}
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </v-card>
           </v-card>
           <!-- 当前钱包账号 -->
@@ -142,7 +161,11 @@
 
 <script>
 import clip from "@/utils/clipboard";
-import { DAOAddress, WhackAMoleContractAddress } from "@/constants";
+import {
+  DAOAddress,
+  WhackAMoleContractAddress,
+  ZeroAddress
+} from "@/constants";
 import { getContractByABI, weiToEther } from "@/utils/web3";
 import { compare } from "@/filters/index";
 // 引入合约 ABI 文件
@@ -157,6 +180,12 @@ export default {
     tokenSymbol: "DAO",
     // 数据列表
     dataList: [],
+    totalAmount: {
+      totalJoinAmount: 0,
+      totalJoinBackAmount: 0,
+      totalJoinRewardAmount: 0,
+      totalInviterRewardAmount: 0
+    },
     // 提示框
     operationResult: {
       color: "success",
@@ -192,7 +221,7 @@ export default {
     },
     address() {
       return this.$store.state.web3.address;
-      // return "0xCD4BBF4FB76d400Eab42B9e530BB98BC72fFC20E";
+      // return "0x3DdcFc89B4DD2b33d9a8Ca0F60180527E9810D4B";
     }
   },
   methods: {
@@ -224,22 +253,37 @@ export default {
         WhackAMoleContractAddress,
         this.web3
       );
+      const totalAmountInfo = await contract.methods
+        .getTotalAmountInfo()
+        .call({ from: this.address });
+      this.totalAmount.totalJoinAmount = weiToEther(
+        totalAmountInfo[0],
+        this.web3
+      );
+      this.totalAmount.totalJoinBackAmount = weiToEther(
+        totalAmountInfo[1],
+        this.web3
+      );
+      this.totalAmount.totalJoinRewardAmount = weiToEther(
+        totalAmountInfo[2],
+        this.web3
+      );
+      this.totalAmount.totalInviterRewardAmount = weiToEther(
+        totalAmountInfo[3],
+        this.web3
+      );
       const resResult = await contract.methods
         .getRoundList()
         .call({ from: this.address });
 
       const getResult = resResult.map(async item => {
-        if (item.isEnd) {
+        if (item.selectedAccount != ZeroAddress) {
           const tempData = {
+            roundId: item.roundId,
             accountList: item.accountList,
-            startTime: item.startTime,
-            endTime: item.endTime,
-            joinTotalAmount: weiToEther(item.joinTotalAmount, this.web3),
             selectedAccount: item.selectedAccount,
             isSelf:
-              item.selectedAccount.toLowerCase() === this.address.toLowerCase(),
-            timestamp: item.timestamp,
-            timestampIndex: item.timestampIndex
+              item.selectedAccount.toLowerCase() === this.address.toLowerCase()
           };
           this.dataList.push(tempData);
         }

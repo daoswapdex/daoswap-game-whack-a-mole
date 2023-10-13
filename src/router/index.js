@@ -2,8 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import WhackAMole from "../views/game/WhackAMole.vue";
 import WhackAMoleList from "../views/game/WhackAMoleList.vue";
-import WhackAMoleListOfInviter from "../views/game/WhackAMoleListOfInviter.vue";
-import WhackAMoleListOfInviterExtra from "../views/game/WhackAMoleListOfInviterExtra.vue";
+// import WhackAMoleListOfInviter from "../views/game/WhackAMoleListOfInviter.vue";
+// import WhackAMoleListOfInviterExtra from "../views/game/WhackAMoleListOfInviterExtra.vue";
 
 Vue.use(VueRouter);
 
@@ -33,17 +33,17 @@ const routes = [
             path: "/whack-a-mole/list",
             name: "JoinWhackAMoleList",
             component: WhackAMoleList
-          },
-          {
-            path: "/whack-a-mole/inviter",
-            name: "JoinWhackAMoleListOfInviter",
-            component: WhackAMoleListOfInviter
-          },
-          {
-            path: "/whack-a-mole/inviter-extra",
-            name: "JoinWhackAMoleListOfInviterExtra",
-            component: WhackAMoleListOfInviterExtra
           }
+          // {
+          //   path: "/whack-a-mole/inviter",
+          //   name: "JoinWhackAMoleListOfInviter",
+          //   component: WhackAMoleListOfInviter
+          // }
+          // {
+          //   path: "/whack-a-mole/inviter-extra",
+          //   name: "JoinWhackAMoleListOfInviterExtra",
+          //   component: WhackAMoleListOfInviterExtra
+          // }
         ]
       },
       {
