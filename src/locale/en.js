@@ -110,5 +110,21 @@ export default {
     "total join back amount": "Total Join Back Amount",
     "total join reward amount": "Total Join Reward Amount",
     "total inviter reward amount": "Total Inviter Reward Amount"
-  }
+  },
+
+  FarmingGame: "FarmingGame",
+  "DFT Token": "DFT Token",
+  "Claim DFT": "Claim DFT",
+  "DFT can be claimed": "DFT can be claimed",
+  "Insufficient DFT can be claimed": "Insufficient DFT can be claimed",
+  "The current account is not selected": "The current account is not selected",
+  "Not within the claim time frame": "Not within the claim time frame",
+  "Claim not yet enabled": "Claim not yet enabled",
+  "DFT has been claimed": "DFT has been claimed",
+  "Exchange DAO": "Exchange DAO",
+  "DFT Balance": "DFT Balance",
+  "Estimated DFT Price": "Estimated DFT Price",
+  Exchange: "Exchange",
+  "Insufficient balance": "Insufficient balance",
+  "Exchange Success": "Exchange Success"
 };

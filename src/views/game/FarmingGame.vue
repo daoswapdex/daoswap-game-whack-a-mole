@@ -3,44 +3,72 @@
     <v-container v-if="web3 && connected" class="fill-height">
       <v-row justify="center">
         <v-col md="6">
-          <!-- 公告 -->
-          <v-card justify="center" class="fill-width">
-            <v-card-title>
-              <span class="title font-weight-bold text-h5">
-                {{ $t("Game Info") }}
-              </span>
-            </v-card-title>
-            <v-divider></v-divider>
-            <v-card-text>
-              <v-row align="center">
-                <v-col class="body-1" cols="12">
-                  <p>
-                    {{ $t("Number of DAOs required for participation") }}：{{
-                      joinAmount
-                    }}
-                    {{ tokenSymbol }}
-                  </p>
-                  <p>
-                    {{ $t("Game start time") }}：{{ startTime | formatSeconds }}
-                  </p>
-                  <p>
-                    {{ $t("Game end time") }}：{{ endTime | formatSeconds }}
-                  </p>
-                  <p>
-                    {{ $t("Number of participants per round") }}：{{
-                      maxNumberOfJoinPerRound
-                    }}
-                  </p>
-                  <p>
-                    {{ $t("Number of times participated on that day") }} /
-                    {{
-                      $t("Number of participation available on that day")
-                    }}：{{ timesOfJoin.joinedTimes }} /
-                    {{ timesOfJoin.canJoinTimes }}
-                  </p>
-                </v-col>
-              </v-row>
-            </v-card-text>
+          <!-- 操作 -->
+          <v-card class="fill-width mt-10">
+            <v-card outlined>
+              <v-card-title>
+                <v-avatar size="24" class="mr-2">
+                  <img :src="require('@/assets/logo.png')" alt="DAO" />
+                </v-avatar>
+                <span class="title font-weight-bold text-h5">
+                  {{ $t("Claim DFT") }}
+                </span>
+              </v-card-title>
+              <v-divider></v-divider>
+              <v-card-text>
+                <v-card-text>
+                  <v-row align="center">
+                    <v-col class="subtitle-1" cols="12">
+                      <p
+                        style="margin: 0;"
+                        @click="handleCopy(DFTToken, $event)"
+                      >
+                        {{ $t("DFT Token") }}: {{ DFTToken }}
+                        <v-icon>mdi-content-copy</v-icon>
+                      </p>
+                    </v-col>
+                    <v-col class="subtitle-1" cols="12">
+                      {{ $t("DFT can be claimed") }}:
+                      {{ claimDFTAmount }}
+                    </v-col>
+                  </v-row>
+                </v-card-text>
+                <v-card-text> </v-card-text>
+                <form
+                  v-if="DFTRewardSwitch && isOpen && isSelected && !isClaim"
+                >
+                  <v-card-actions class="justify-center">
+                    <v-btn
+                      large
+                      color="#93B954"
+                      dark
+                      width="80%"
+                      @click="claimDFT()"
+                    >
+                      {{ $t("Claim") }}
+                    </v-btn>
+                  </v-card-actions>
+                </form>
+                <v-row align="center" v-else>
+                  <v-col v-if="DFTRewardSwitch" class="subtitle-1" cols="12">
+                    <div v-if="isOpen">
+                      <div v-if="!isSelected && !isClaim">
+                        {{ $t("The current account is not selected") }}
+                      </div>
+                      <div v-else>
+                        {{ $t("DFT has been claimed") }}
+                      </div>
+                    </div>
+                    <div v-else>
+                      {{ $t("Not within the claim time frame") }}
+                    </div>
+                  </v-col>
+                  <v-col v-else class="subtitle-1" cols="12">
+                    {{ $t("Claim not yet enabled") }}
+                  </v-col>
+                </v-row>
+              </v-card-text>
+            </v-card>
           </v-card>
           <!-- 操作 -->
           <v-card class="fill-width mt-10">
@@ -50,7 +78,7 @@
                   <img :src="require('@/assets/logo.png')" alt="DAO" />
                 </v-avatar>
                 <span class="title font-weight-bold text-h5">
-                  {{ $t("Join Game") }}
+                  {{ $t("Exchange DAO") }}
                 </span>
               </v-card-title>
               <v-divider></v-divider>
@@ -58,18 +86,21 @@
                 <v-card-text>
                   <v-row align="center">
                     <v-col class="subtitle-1" cols="12">
-                      {{ $t("Number of participants in this round") }}:
-                      {{ latestRoundInfo.accountList.length }} /
-                      {{ maxNumberOfJoinPerRound }}
+                      {{ $t("DFT Balance") }}: {{ accountAssets.balance }}
                     </v-col>
                     <v-col class="subtitle-1" cols="12">
                       {{ $t("Authorized quota") }}:
                       {{ accountAssets.allowanceAmount }}
                     </v-col>
+                    <!-- ≈ &#8776; &asymp; -->
+                    <v-col class="subtitle-1" cols="12">
+                      {{ $t("Estimated DFT Price") }}: 1 DFT ≈
+                      {{ DFTPrice }} DAO
+                    </v-col>
                   </v-row>
                 </v-card-text>
                 <v-card-text> </v-card-text>
-                <form v-if="timesOfJoin.isCanJoin && isOpen && !hasJoined">
+                <form v-if="parseFloat(accountAssets.balance) > 0">
                   <v-card-actions class="justify-center">
                     <v-btn
                       large
@@ -79,40 +110,24 @@
                       @click="
                         accountAssets.allowanceAmount &&
                         parseFloat(accountAssets.allowanceAmount) >=
-                          parseFloat(joinAmount)
-                          ? submit()
+                          parseFloat(accountAssets.balance)
+                          ? exchangeDAO()
                           : handleApprove()
                       "
                     >
                       {{
                         accountAssets.allowanceAmount &&
                         parseFloat(accountAssets.allowanceAmount) >=
-                          parseFloat(joinAmount)
-                          ? $t("Join")
+                          parseFloat(accountAssets.balance)
+                          ? $t("Exchange")
                           : $t("Approve")
                       }}
                     </v-btn>
                   </v-card-actions>
                 </form>
                 <v-row align="center" v-else>
-                  <v-col
-                    v-if="timesOfJoin.isCanJoin"
-                    class="subtitle-1"
-                    cols="12"
-                  >
-                    <div v-if="isOpen && hasJoined">
-                      {{ $t("This round has already been participated in") }}
-                    </div>
-                    <div v-if="!isOpen">
-                      {{ $t("Not within the join time frame") }}
-                    </div>
-                  </v-col>
-                  <v-col v-else class="subtitle-1" cols="12">
-                    {{
-                      $t(
-                        "You have reached the number of times you can participate"
-                      )
-                    }}
+                  <v-col class="subtitle-1" cols="12">
+                    {{ $t("Insufficient balance") }}
                   </v-col>
                 </v-row>
               </v-card-text>
@@ -203,38 +218,31 @@ import ERC20_abi from "@/constants/contractJson/ERC20_abi.json";
 import GameWhackAMole_ABI from "@/constants/contractJson/GameWhackAMole_abi.json";
 
 export default {
-  name: "GameWhackAMole",
+  name: "FarmingGame",
   data: () => ({
     loading: false,
     DAOAddress,
     tokenSymbol: "DAO",
-    rewardTokenSymbol: "DST",
     // 合约信息
     contractInfo: {
       token: null
     },
-    // 表单数据
-    joinToken: null,
-    joinAmount: 0,
-    maxNumberOfJoinPerRound: 0,
-    timesOfJoin: {
-      canJoinTimes: 0,
-      joinedTimes: 0,
-      isCanJoin: false
-    },
-    latestRoundInfo: {
-      accountList: []
-    },
+    // 数据列表
+    dataList: [],
     // 当前账户相关信息
     accountAssets: {
       balance: 0,
       allowanceAmount: 0
     },
-    // 合约数据
-    startTime: 0,
-    endTime: 0,
-    hasJoined: false,
+    // 显示条件
+    DFTRewardSwitch: false,
     isOpen: false,
+    isSelected: false,
+    isClaim: false,
+    // DFT价格
+    DFTToken: null,
+    claimDFTAmount: 0,
+    DFTPrice: 0,
     // 提示框
     operationResult: {
       color: "success",
@@ -275,7 +283,7 @@ export default {
     },
     address() {
       return this.$store.state.web3.address;
-      // return "0xCD4BBF4FB76d400Eab42B9e530BB98BC72fFC20E";
+      // return "0x3DdcFc89B4DD2b33d9a8Ca0F60180527E9810D4B";
     },
     chainId() {
       return this.$store.state.web3.chainId;
@@ -299,14 +307,8 @@ export default {
     },
     // 获取信息
     async getInfo() {
-      this.loading = true;
-      try {
-        this.getContractInfoToken();
-        await this.getContractInfo();
-      } catch (error) {
-        console.info(error);
-      }
-      this.loading = false;
+      this.getContractInfoToken();
+      await this.getContractInfo();
     },
     // 获取合约地址
     getContractInfoToken() {
@@ -317,22 +319,21 @@ export default {
         this.contractInfo.token = contractInfoToken.address;
       }
     },
-    // 获取合约信息
+    // 获取数据列表
     async getContractInfo() {
+      this.loading = true;
       const contract = getContractByABI(
         GameWhackAMole_ABI,
         this.contractInfo.token,
         this.web3
       );
-      const joinToken = await contract.methods.joinToken().call();
-      this.joinToken = joinToken;
-      const joinAmount = await contract.methods.joinAmount().call();
-      this.joinAmount = weiToEther(joinAmount, this.web3);
-      this.maxNumberOfJoinPerRound = await contract.methods
-        .maxNumberOfJoinPerRound()
-        .call();
+      this.DFTToken = await contract.methods.DFTToken().call();
       // 查询当前账号余额
-      const contractERC20 = getContractByABI(ERC20_abi, joinToken, this.web3);
+      const contractERC20 = getContractByABI(
+        ERC20_abi,
+        this.DFTToken,
+        this.web3
+      );
       const balance = await contractERC20.methods
         .balanceOf(this.address)
         .call();
@@ -341,35 +342,61 @@ export default {
         .call();
       this.accountAssets.balance = weiToEther(balance, this.web3);
       this.accountAssets.allowanceAmount = weiToEther(allowance, this.web3);
-      this.tokenSymbol = await contractERC20.methods.symbol().call();
-      // 查询本轮次信息
-      const latestRoundId = await contract.methods.getLatestRoundId().call();
-      const latestRoundInfo = await contract.methods
-        .getRoundInfoById(latestRoundId)
-        .call();
-      this.latestRoundInfo.accountList = latestRoundInfo.accountList;
-      // get start time
-      this.startTime = await contract.methods.startTime().call();
-      // get end time
-      this.endTime = await contract.methods.endTime().call();
-      // 查询参与前置条件
-      const conditions = await contract.methods.queryConditionsOfJoin().call({
+      // 查询领取DFT条件
+      const conditions = await contract.methods
+        .queryConditionsOfClaimDFT()
+        .call({
+          from: this.address
+        });
+      this.DFTRewardSwitch = conditions[0];
+      this.isOpen = conditions[1];
+      this.isSelected = conditions[2];
+      this.isClaim = conditions[3];
+      // 查询可提取DFT数量
+      const claimDFTAmount = await contract.methods.queryClaimDFTAmount().call({
         from: this.address
       });
-      this.isOpen = conditions[0];
-      this.hasJoined = conditions[1];
-      this.timesOfJoin.canJoinTimes = parseInt(conditions[2]);
-      this.timesOfJoin.joinedTimes = parseInt(conditions[3]);
-      this.timesOfJoin.isCanJoin = conditions[4];
+      this.claimDFTAmount = this.isClaim
+        ? 0
+        : weiToEther(claimDFTAmount, this.web3);
+      // 查询当前DFT价格
+      const DFTPrice = await contract.methods.getDFTPrice().call();
+      this.DFTPrice = weiToEther(DFTPrice, this.web3);
+      this.loading = false;
+    },
+    // 提交
+    async claimDFT() {
+      this.loading = true;
+      if (parseFloat(this.claimDFTAmount) > 0) {
+        getContractByABI(GameWhackAMole_ABI, this.contractInfo.token, this.web3)
+          .methods.claimDFT()
+          .send({ from: this.address })
+          .then(() => {
+            this.loading = false;
+            this.operationResult.color = "success";
+            this.operationResult.snackbar = true;
+            this.operationResult.text = "Claim Success";
+            this.getInfo();
+          })
+          .catch(e => {
+            this.loading = false;
+            console.info(e);
+          });
+      } else {
+        this.operationResult.color = "error";
+        this.operationResult.snackbar = true;
+        this.operationResult.text = "Insufficient DFT can be claimed";
+        this.loading = false;
+      }
     },
     // 授权
     handleApprove() {
       this.loading = true;
       // 执行合约
-      getContractByABI(ERC20_abi, this.joinToken, this.web3)
+      getContractByABI(ERC20_abi, this.DFTToken, this.web3)
         .methods.approve(
           this.contractInfo.token,
-          etherToWei(this.joinAmount, this.web3)
+          etherToWei(this.accountAssets.balance, this.web3)
         )
         .send({ from: this.address })
         .then(() => {
@@ -384,21 +411,20 @@ export default {
           console.info(e);
         });
     },
-    // 提交
-    async submit() {
+    // 兑换
+    async exchangeDAO() {
       this.loading = true;
-      if (
-        parseFloat(this.joinAmount) <=
-        parseFloat(this.accountAssets.allowanceAmount)
-      ) {
+      if (parseFloat(this.accountAssets.balance) > 0) {
         getContractByABI(GameWhackAMole_ABI, this.contractInfo.token, this.web3)
-          .methods.join()
+          .methods.exchangeDAO(
+            etherToWei(this.accountAssets.balance, this.web3)
+          )
           .send({ from: this.address })
           .then(() => {
             this.loading = false;
             this.operationResult.color = "success";
             this.operationResult.snackbar = true;
-            this.operationResult.text = "Join Success";
+            this.operationResult.text = "Exchange Success";
             this.getInfo();
           })
           .catch(e => {
@@ -408,8 +434,7 @@ export default {
       } else {
         this.operationResult.color = "error";
         this.operationResult.snackbar = true;
-        this.operationResult.text =
-          "JoinForm.The amount exceeds the allowance amount";
+        this.operationResult.text = "Insufficient balance";
         this.loading = false;
       }
     }

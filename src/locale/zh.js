@@ -106,5 +106,21 @@ export default {
     "total join back amount": "总参与奖励金额",
     "total join reward amount": "总奖励金额",
     "total inviter reward amount": "总邀请奖励金额"
-  }
+  },
+
+  FarmingGame: "农场游戏",
+  "DFT Token": "DFT代币地址",
+  "Claim DFT": "提取DFT",
+  "DFT can be claimed": "可提取DFT数量",
+  "Insufficient DFT can be claimed": "可提取DFT数量不足",
+  "The current account is not selected": "当前账号未被选中",
+  "Not within the claim time frame": "不在提取时间范围内",
+  "Claim not yet enabled": "提取暂不可用",
+  "DFT has been claimed": "DFT已领取",
+  "Exchange DAO": "兑换DAO",
+  "DFT Balance": "DFT余额",
+  "Estimated DFT Price": "DFT预估价格",
+  Exchange: "兑换",
+  "Insufficient balance": "余额不足",
+  "Exchange Success": "兑换成功"
 };

@@ -178,6 +178,10 @@ export default {
     loading: false,
     DAOAddress,
     tokenSymbol: "DAO",
+    // 合约信息
+    contractInfo: {
+      token: null
+    },
     // 数据列表
     dataList: [],
     totalAmount: {
@@ -210,6 +214,11 @@ export default {
       if (address) {
         this.getInfo();
       }
+    },
+    chainId(chainId) {
+      if (chainId) {
+        this.getInfo();
+      }
     }
   },
   computed: {
@@ -222,6 +231,9 @@ export default {
     address() {
       return this.$store.state.web3.address;
       // return "0x3DdcFc89B4DD2b33d9a8Ca0F60180527E9810D4B";
+    },
+    chainId() {
+      return this.$store.state.web3.chainId;
     }
   },
   methods: {
@@ -242,7 +254,17 @@ export default {
     },
     // 获取信息
     async getInfo() {
+      this.getContractInfoToken();
       await this.getDataList();
+    },
+    // 获取合约地址
+    getContractInfoToken() {
+      const contractInfoToken = WhackAMoleContractAddress.filter(
+        info => info.chainId === parseInt(this.chainId)
+      )[0];
+      if (contractInfoToken) {
+        this.contractInfo.token = contractInfoToken.address;
+      }
     },
     // 获取数据列表
     async getDataList() {
@@ -250,7 +272,7 @@ export default {
       this.loading = true;
       const contract = getContractByABI(
         GameWhackAMole_ABI,
-        WhackAMoleContractAddress,
+        this.contractInfo.token,
         this.web3
       );
       const totalAmountInfo = await contract.methods

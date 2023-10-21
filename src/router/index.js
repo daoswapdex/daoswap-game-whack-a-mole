@@ -47,6 +47,11 @@ const routes = [
         ]
       },
       {
+        path: "/farming-game",
+        name: "FarmingGame",
+        component: () => import("@/views/game/FarmingGame.vue")
+      },
+      {
         path: "/404",
         component: () => import("@/views/404.vue")
       },

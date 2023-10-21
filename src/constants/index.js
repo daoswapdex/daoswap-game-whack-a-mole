@@ -1,5 +1,13 @@
-export const WhackAMoleContractAddress =
-  "0xb3eC88EEC8a0B824A48480d0f570A9167beFE559";
+export const WhackAMoleContractAddress = [
+  {
+    chainId: 97,
+    address: "0x20c3A8087cc8Ee3d25364e7010f20b84c0104ae1"
+  },
+  {
+    chainId: 56,
+    address: "0x398C26Bf026962b35f528B57aaabbC0B5953b32e"
+  }
+];
 
 /********** base **********/
 export const DAOAddress = "0xc096332CAacF00319703558988aD03eC6586e704";
