@@ -42,7 +42,7 @@
                   <img :src="require('@/assets/logo.png')" alt="DAO" />
                 </v-avatar>
                 <span class="title font-weight-bold text-h5">
-                  {{ $t("Join Game Record") }}
+                  {{ $t("Participation Record") }}
                 </span>
               </v-card-title>
               <v-divider></v-divider>

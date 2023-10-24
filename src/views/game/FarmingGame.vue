@@ -28,7 +28,7 @@
                       </p>
                     </v-col>
                     <v-col class="subtitle-1" cols="12">
-                      {{ $t("DFT can be claimed") }}:
+                      {{ $t("Quantity available for collection on that day") }}:
                       {{ claimDFTAmount }}
                     </v-col>
                   </v-row>
@@ -94,23 +94,34 @@
                     </v-col>
                     <!-- ≈ &#8776; &asymp; -->
                     <v-col class="subtitle-1" cols="12">
-                      {{ $t("Estimated DFT Price") }}: 1 DFT ≈
-                      {{ DFTPrice }} DAO
+                      {{ $t("DFT Price") }}: 1 DFT ≈ {{ DFTPrice }} DAO
                     </v-col>
                   </v-row>
                 </v-card-text>
                 <v-card-text> </v-card-text>
                 <form v-if="parseFloat(accountAssets.balance) > 0">
+                  <v-card-text>
+                    <v-text-field
+                      v-model="exchangeAmount"
+                      :error-messages="exchangeAmountErrors"
+                      :label="$t('ExchangeForm.Exchange Amount')"
+                      required
+                      @input="$v.exchangeAmount.$touch()"
+                      @blur="$v.exchangeAmount.$touch()"
+                      :autofocus="exchangeAmountFocus"
+                    ></v-text-field>
+                  </v-card-text>
                   <v-card-actions class="justify-center">
                     <v-btn
                       large
                       color="#93B954"
                       dark
                       width="80%"
+                      :disabled="exchangeAmountErrors.length > 0"
                       @click="
                         accountAssets.allowanceAmount &&
                         parseFloat(accountAssets.allowanceAmount) >=
-                          parseFloat(accountAssets.balance)
+                          parseFloat(exchangeAmount)
                           ? exchangeDAO()
                           : handleApprove()
                       "
@@ -118,7 +129,7 @@
                       {{
                         accountAssets.allowanceAmount &&
                         parseFloat(accountAssets.allowanceAmount) >=
-                          parseFloat(accountAssets.balance)
+                          parseFloat(exchangeAmount)
                           ? $t("Exchange")
                           : $t("Approve")
                       }}
@@ -210,6 +221,8 @@
 </template>
 
 <script>
+import { validationMixin } from "vuelidate";
+import { required, decimal } from "vuelidate/lib/validators";
 import clip from "@/utils/clipboard";
 import { DAOAddress, WhackAMoleContractAddress } from "@/constants";
 import { getContractByABI, weiToEther, etherToWei } from "@/utils/web3";
@@ -219,6 +232,10 @@ import GameWhackAMole_ABI from "@/constants/contractJson/GameWhackAMole_abi.json
 
 export default {
   name: "FarmingGame",
+  mixins: [validationMixin],
+  validations: {
+    exchangeAmount: { required, decimal }
+  },
   data: () => ({
     loading: false,
     DAOAddress,
@@ -230,6 +247,8 @@ export default {
     // 数据列表
     dataList: [],
     // 当前账户相关信息
+    exchangeAmountFocus: false,
+    exchangeAmount: undefined,
     accountAssets: {
       balance: 0,
       allowanceAmount: 0
@@ -287,6 +306,23 @@ export default {
     },
     chainId() {
       return this.$store.state.web3.chainId;
+    },
+    exchangeAmountErrors() {
+      const errors = [];
+      if (!this.$v.exchangeAmount.$dirty) return errors;
+      !this.$v.exchangeAmount.decimal &&
+        errors.push(this.$t("ExchangeForm.Invalid amount"));
+      !this.$v.exchangeAmount.required &&
+        errors.push(this.$t("ExchangeForm.The amount is required"));
+
+      const exchangeAmountValue = parseFloat(this.$v.exchangeAmount.$model);
+      if (exchangeAmountValue <= 0) {
+        errors.push(this.$t("ExchangeForm.The amount is be gt zero"));
+      }
+      if (exchangeAmountValue > this.accountAssets.balance) {
+        errors.push(this.$t("ExchangeForm.The amount exceeds the balance"));
+      }
+      return errors;
     }
   },
   methods: {
@@ -342,6 +378,10 @@ export default {
         .call();
       this.accountAssets.balance = weiToEther(balance, this.web3);
       this.accountAssets.allowanceAmount = weiToEther(allowance, this.web3);
+      this.exchangeAmount =
+        parseFloat(this.accountAssets.allowanceAmount) > 0
+          ? this.accountAssets.allowanceAmount
+          : this.accountAssets.balance;
       // 查询领取DFT条件
       const conditions = await contract.methods
         .queryConditionsOfClaimDFT()
@@ -391,51 +431,63 @@ export default {
     },
     // 授权
     handleApprove() {
-      this.loading = true;
-      // 执行合约
-      getContractByABI(ERC20_abi, this.DFTToken, this.web3)
-        .methods.approve(
-          this.contractInfo.token,
-          etherToWei(this.accountAssets.balance, this.web3)
-        )
-        .send({ from: this.address })
-        .then(() => {
-          this.loading = false;
-          this.operationResult.color = "success";
-          this.operationResult.snackbar = true;
-          this.operationResult.text = "Approve Success";
-          this.getInfo();
-        })
-        .catch(e => {
-          this.loading = false;
-          console.info(e);
-        });
-    },
-    // 兑换
-    async exchangeDAO() {
-      this.loading = true;
-      if (parseFloat(this.accountAssets.balance) > 0) {
-        getContractByABI(GameWhackAMole_ABI, this.contractInfo.token, this.web3)
-          .methods.exchangeDAO(
-            etherToWei(this.accountAssets.balance, this.web3)
+      if (this.$v.$invalid) {
+        // error info
+      } else {
+        this.$v.$touch();
+        this.loading = true;
+        // 执行合约
+        getContractByABI(ERC20_abi, this.DFTToken, this.web3)
+          .methods.approve(
+            this.contractInfo.token,
+            etherToWei(this.exchangeAmount, this.web3)
           )
           .send({ from: this.address })
           .then(() => {
             this.loading = false;
             this.operationResult.color = "success";
             this.operationResult.snackbar = true;
-            this.operationResult.text = "Exchange Success";
+            this.operationResult.text = "Approve Success";
             this.getInfo();
           })
           .catch(e => {
             this.loading = false;
             console.info(e);
           });
+      }
+    },
+    // 兑换
+    async exchangeDAO() {
+      if (this.$v.$invalid) {
+        // error info
       } else {
-        this.operationResult.color = "error";
-        this.operationResult.snackbar = true;
-        this.operationResult.text = "Insufficient balance";
-        this.loading = false;
+        this.$v.$touch();
+        this.loading = true;
+        if (parseFloat(this.exchangeAmount) > 0) {
+          getContractByABI(
+            GameWhackAMole_ABI,
+            this.contractInfo.token,
+            this.web3
+          )
+            .methods.exchangeDAO(etherToWei(this.exchangeAmount, this.web3))
+            .send({ from: this.address })
+            .then(() => {
+              this.loading = false;
+              this.operationResult.color = "success";
+              this.operationResult.snackbar = true;
+              this.operationResult.text = "Exchange Success";
+              this.getInfo();
+            })
+            .catch(e => {
+              this.loading = false;
+              console.info(e);
+            });
+        } else {
+          this.operationResult.color = "error";
+          this.operationResult.snackbar = true;
+          this.operationResult.text = "Insufficient balance";
+          this.loading = false;
+        }
       }
     }
   }

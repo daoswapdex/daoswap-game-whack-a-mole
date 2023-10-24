@@ -57,15 +57,18 @@ export default {
   "At mostest": "At mostest",
   Operation: "Operation",
 
-  "Whack A Mole": "Whack A Mole",
-  "Whack A Mole List": "Joined Record",
+  "Whack A Mole": "Mining Game",
+  "Whack A Mole List": "Mining Records",
   "Whack A Mole Inviter": "Inviter Reward",
   "Whack A Mole Inviter Extra": "Inviter Extra Reward",
   "Join Game Record": "Join Game Record",
+  "Participation Record": "Participation Record",
 
   "Authorized quota": "Authorized quota",
+  "DAO Balance": "DAO Balance",
   Join: "Join",
   "Join Game": "Join Game",
+  "Participate in mining": "Participate in mining",
   JoinForm: {
     "The amount exceeds the allowance amount":
       "The amount exceeds the allowance amount"
@@ -85,15 +88,18 @@ export default {
   "Join Duration": "Join Duration",
   "Join Total Amount": "Join Total Amount",
   "Inviter Reward Amount": "Reward Amount",
-  "Selected or not": "Selected or not",
+  "Selected or not": "Whether to mint in or not",
   "Selected Yes": "Yes",
   "Selected No": "No",
 
   "Game Info": "Game Info",
+  "FOG Mining Game": "FOG Mining Game",
   "Number of DAOs required for participation":
     "Number of DAOs required for participation",
-  "Game start time": "Game start time",
-  "Game end time": "Game end time",
+  "DAO required for each mining operation":
+    "DAO required for each mining operation",
+  "Game start time": "Start time",
+  "Game end time": "End time",
   "Number of participants per round": "Number of participants per round",
   "Current round": "Current round",
   "Number of times participated on that day": "Joined Number",
@@ -112,10 +118,13 @@ export default {
     "total inviter reward amount": "Total Inviter Reward Amount"
   },
 
-  FarmingGame: "FarmingGame",
+  FarmingGame: "DFT",
   "DFT Token": "DFT Token",
   "Claim DFT": "Claim DFT",
+  "DFT Rewards": "DFT Rewards",
   "DFT can be claimed": "DFT can be claimed",
+  "Quantity available for collection on that day":
+    "Quantity available for collection on that day",
   "Insufficient DFT can be claimed": "Insufficient DFT can be claimed",
   "The current account is not selected": "The current account is not selected",
   "Not within the claim time frame": "Not within the claim time frame",
@@ -123,7 +132,7 @@ export default {
   "DFT has been claimed": "DFT has been claimed",
   "Exchange DAO": "Exchange DAO",
   "DFT Balance": "DFT Balance",
-  "Estimated DFT Price": "Estimated DFT Price",
+  "DFT Price": "DFT Price",
   Exchange: "Exchange",
   "Insufficient balance": "Insufficient balance",
   "Exchange Success": "Exchange Success"

@@ -57,15 +57,18 @@ export default {
   "At mostest": "最多",
   Operation: "操作",
 
-  "Whack A Mole": "打地鼠",
-  "Whack A Mole List": "参与记录",
+  "Whack A Mole": "挖矿游戏",
+  "Whack A Mole List": "挖矿记录",
   "Whack A Mole Inviter": "邀请人奖励",
   "Whack A Mole Inviter Extra": "邀请人额外奖励",
   "Join Game Record": "参与游戏记录",
+  "Participation Record": "参与记录",
 
   "Authorized quota": "已授权额度",
+  "DAO Balance": "DAO余额",
   Join: "参与",
   "Join Game": "参与游戏",
+  "Participate in mining": "参与挖矿",
   JoinForm: {
     "The amount exceeds the allowance amount": "金额超过账户授权额度"
   },
@@ -83,14 +86,16 @@ export default {
   "Join Duration": "参与时间",
   "Join Total Amount": "总参与数量",
   "Inviter Reward Amount": "奖励数量",
-  "Selected or not": "是否被选中",
+  "Selected or not": "是否挖中",
   "Selected Yes": "是",
   "Selected No": "否",
 
   "Game Info": "游戏信息",
+  "FOG Mining Game": "FOG挖矿游戏",
   "Number of DAOs required for participation": "参与所需的DAO数量",
-  "Game start time": "游戏开始时间",
-  "Game end time": "游戏结束时间",
+  "DAO required for each mining operation": "每次挖矿所需DAO",
+  "Game start time": "开始时间",
+  "Game end time": "结束时间",
   "Number of participants per round": "每轮参与人数",
   "Current round": "当前轮次",
   "Number of times participated on that day": "已参与次数",
@@ -108,10 +113,12 @@ export default {
     "total inviter reward amount": "总邀请奖励金额"
   },
 
-  FarmingGame: "农场游戏",
+  FarmingGame: "DFT",
   "DFT Token": "DFT代币地址",
   "Claim DFT": "提取DFT",
+  "DFT Rewards": "DFT奖励",
   "DFT can be claimed": "可提取DFT数量",
+  "Quantity available for collection on that day": "当日可领取数量",
   "Insufficient DFT can be claimed": "可提取DFT数量不足",
   "The current account is not selected": "当前账号未被选中",
   "Not within the claim time frame": "不在提取时间范围内",
@@ -119,8 +126,15 @@ export default {
   "DFT has been claimed": "DFT已领取",
   "Exchange DAO": "兑换DAO",
   "DFT Balance": "DFT余额",
-  "Estimated DFT Price": "DFT预估价格",
+  "DFT Price": "DFT价格",
   Exchange: "兑换",
   "Insufficient balance": "余额不足",
-  "Exchange Success": "兑换成功"
+  "Exchange Success": "兑换成功",
+  ExchangeForm: {
+    "Exchange Amount": "兑换额度",
+    "The amount exceeds the balance": "金额超过可兑换额度",
+    "The amount is be gt zero": "兑换额度必须大于0",
+    "Invalid amount": "不可用的数值",
+    "The amount is required": "请填写兑换额度"
+  }
 };

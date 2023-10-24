@@ -7,7 +7,7 @@
           <v-card justify="center" class="fill-width">
             <v-card-title>
               <span class="title font-weight-bold text-h5">
-                {{ $t("Game Info") }}
+                {{ $t("FOG Mining Game") }}
               </span>
             </v-card-title>
             <v-divider></v-divider>
@@ -15,7 +15,7 @@
               <v-row align="center">
                 <v-col class="body-1" cols="12">
                   <p>
-                    {{ $t("Number of DAOs required for participation") }}：{{
+                    {{ $t("DAO required for each mining operation") }}：{{
                       joinAmount
                     }}
                     {{ tokenSymbol }}
@@ -50,7 +50,7 @@
                   <img :src="require('@/assets/logo.png')" alt="DAO" />
                 </v-avatar>
                 <span class="title font-weight-bold text-h5">
-                  {{ $t("Join Game") }}
+                  {{ $t("Participate in mining") }}
                 </span>
               </v-card-title>
               <v-divider></v-divider>
@@ -61,6 +61,10 @@
                       {{ $t("Number of participants in this round") }}:
                       {{ latestRoundInfo.accountList.length }} /
                       {{ maxNumberOfJoinPerRound }}
+                    </v-col>
+                    <v-col class="subtitle-1" cols="12">
+                      {{ $t("DAO Balance") }}:
+                      {{ accountAssets.balance }}
                     </v-col>
                     <v-col class="subtitle-1" cols="12">
                       {{ $t("Authorized quota") }}:
@@ -275,7 +279,7 @@ export default {
     },
     address() {
       return this.$store.state.web3.address;
-      // return "0xCD4BBF4FB76d400Eab42B9e530BB98BC72fFC20E";
+      // return "0xBdB9BD48CDCF075D66f81f083b9Ab618a0530c31";
     },
     chainId() {
       return this.$store.state.web3.chainId;
