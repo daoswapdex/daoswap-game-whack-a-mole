@@ -7,7 +7,7 @@
           <v-card justify="center" class="fill-width">
             <v-card-title>
               <span class="title font-weight-bold text-h5">
-                {{ $t("Total Amount Info") }}
+                {{ $t("Mining reward information") }}
               </span>
             </v-card-title>
             <v-divider></v-divider>
@@ -15,20 +15,30 @@
               <v-row align="center">
                 <v-col class="body-1" cols="12">
                   <p>
-                    {{ $t("Total Amount.total join amount") }}：
-                    {{ totalAmount.totalJoinAmount }} DAO
+                    {{
+                      $t(
+                        "Total Mining Reward Amount.Accumulated participation in mining"
+                      )
+                    }}DAO： {{ totalAmount.totalJoinAmount }}
                   </p>
                   <p>
-                    {{ $t("Total Amount.total join back amount") }}：
-                    {{ totalAmount.totalJoinBackAmount }} DAO
+                    {{
+                      $t(
+                        "Total Mining Reward Amount.Accumulated mining rewards"
+                      )
+                    }}DAO： {{ totalAmount.totalJoinBackAmount }}
                   </p>
                   <p>
-                    {{ $t("Total Amount.total join reward amount") }}：
-                    {{ totalAmount.totalJoinRewardAmount }} DST
+                    {{
+                      $t(
+                        "Total Mining Reward Amount.Accumulated mining rewards"
+                      )
+                    }}DST： {{ totalAmount.totalJoinRewardAmount }}
                   </p>
                   <p>
-                    {{ $t("Total Amount.total inviter reward amount") }}：
-                    {{ totalAmount.totalInviterRewardAmount }} DAO
+                    {{
+                      $t("Total Mining Reward Amount.Inviting mining rewards")
+                    }}DAO： {{ totalAmount.totalInviterRewardAmount }}
                   </p>
                 </v-col>
               </v-row>

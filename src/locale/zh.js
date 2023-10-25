@@ -113,6 +113,13 @@ export default {
     "total inviter reward amount": "总邀请奖励金额"
   },
 
+  "Mining reward information": "挖矿奖励信息",
+  "Total Mining Reward Amount": {
+    "Accumulated participation in mining": "累计参与挖矿",
+    "Accumulated mining rewards": "累计挖矿奖励",
+    "Inviting mining rewards": "邀请TA挖矿奖励"
+  },
+
   FarmingGame: "DFT",
   "DFT Token": "DFT代币地址",
   "Claim DFT": "提取DFT",
@@ -136,5 +143,7 @@ export default {
     "The amount is be gt zero": "兑换额度必须大于0",
     "Invalid amount": "不可用的数值",
     "The amount is required": "请填写兑换额度"
-  }
+  },
+  "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim.":
+    "当日24点前未领取的视为自动放弃领取。"
 };

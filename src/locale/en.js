@@ -118,6 +118,14 @@ export default {
     "total inviter reward amount": "Total Inviter Reward Amount"
   },
 
+  "Mining reward information": "Mining reward information",
+  "Total Mining Reward Amount": {
+    "Accumulated participation in mining":
+      "Accumulated participation in mining",
+    "Accumulated mining rewards": "Accumulated mining rewards",
+    "Inviting mining rewards": "Inviting mining rewards"
+  },
+
   FarmingGame: "DFT",
   "DFT Token": "DFT Token",
   "Claim DFT": "Claim DFT",
@@ -135,5 +143,7 @@ export default {
   "DFT Price": "DFT Price",
   Exchange: "Exchange",
   "Insufficient balance": "Insufficient balance",
-  "Exchange Success": "Exchange Success"
+  "Exchange Success": "Exchange Success",
+  "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim.":
+    "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim."
 };

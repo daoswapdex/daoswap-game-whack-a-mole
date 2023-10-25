@@ -68,6 +68,18 @@
                   </v-col>
                 </v-row>
               </v-card-text>
+              <v-divider></v-divider>
+              <v-card-text>
+                <v-row align="center">
+                  <v-col class="subtitle-2" cols="12" style="color: #ff5252">
+                    {{
+                      $t(
+                        "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim."
+                      )
+                    }}
+                  </v-col>
+                </v-row>
+              </v-card-text>
             </v-card>
           </v-card>
           <!-- 操作 -->
