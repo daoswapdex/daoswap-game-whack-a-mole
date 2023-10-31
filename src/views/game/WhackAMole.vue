@@ -392,7 +392,9 @@ export default {
       const accountList = await contract.methods
         .getSelectAccountListByTimestamp(timestamp)
         .call();
-      this.isReachMaxRound = maxRoundNumberOfPerDay <= accountList.length;
+      if (maxRoundNumberOfPerDay > 0) {
+        this.isReachMaxRound = maxRoundNumberOfPerDay <= accountList.length;
+      }
     },
     // 授权
     handleApprove() {
