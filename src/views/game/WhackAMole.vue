@@ -73,7 +73,14 @@
                   </v-row>
                 </v-card-text>
                 <v-card-text> </v-card-text>
-                <form v-if="timesOfJoin.isCanJoin && isOpen && !hasJoined">
+                <form
+                  v-if="
+                    timesOfJoin.isCanJoin &&
+                      isOpen &&
+                      !hasJoined &&
+                      !isReachMaxRound
+                  "
+                >
                   <v-card-actions class="justify-center">
                     <v-btn
                       large
@@ -104,11 +111,20 @@
                     class="subtitle-1"
                     cols="12"
                   >
-                    <div v-if="isOpen && hasJoined">
-                      {{ $t("This round has already been participated in") }}
+                    <div v-if="!isReachMaxRound">
+                      <div v-if="isOpen && hasJoined">
+                        {{ $t("This round has already been participated in") }}
+                      </div>
+                      <div v-if="!isOpen">
+                        {{ $t("Not within the join time frame") }}
+                      </div>
                     </div>
-                    <div v-if="!isOpen">
-                      {{ $t("Not within the join time frame") }}
+                    <div v-else>
+                      {{
+                        $t(
+                          "The maximum number of participating rounds for the day has been reached"
+                        )
+                      }}
                     </div>
                   </v-col>
                   <v-col v-else class="subtitle-1" cols="12">
@@ -239,6 +255,7 @@ export default {
     endTime: 0,
     hasJoined: false,
     isOpen: false,
+    isReachMaxRound: false,
     // 提示框
     operationResult: {
       color: "success",
@@ -365,6 +382,17 @@ export default {
       this.timesOfJoin.canJoinTimes = parseInt(conditions[2]);
       this.timesOfJoin.joinedTimes = parseInt(conditions[3]);
       this.timesOfJoin.isCanJoin = conditions[4];
+      // 获取当天0点时间戳
+      const currentDayTimestamp = new Date(new Date().setHours(0, 0, 0, 0));
+      const timestamp = currentDayTimestamp.getTime() / 1000;
+      // 查询每天最大参与轮数
+      const maxRoundNumberOfPerDay = await contract.methods
+        .maxRoundNumberOfPerDay()
+        .call();
+      const accountList = await contract.methods
+        .getSelectAccountListByTimestamp(timestamp)
+        .call();
+      this.isReachMaxRound = maxRoundNumberOfPerDay <= accountList.length;
     },
     // 授权
     handleApprove() {

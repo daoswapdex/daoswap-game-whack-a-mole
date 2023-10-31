@@ -101,6 +101,8 @@ export default {
   "Number of times participated on that day": "已参与次数",
   "Number of participation available on that day": "可参与次数",
   "Number of participants in this round": "本轮参与人数",
+  "The maximum number of participating rounds for the day has been reached":
+    "已达到当日最大可参与轮次",
 
   "Reward Total Amount": "总奖励金额",
   "Extra Reward Total Amount": "总奖励金额",

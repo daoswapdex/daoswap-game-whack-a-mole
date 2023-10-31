@@ -106,6 +106,8 @@ export default {
   "Number of participation available on that day": "Can Join Number",
   "Number of participants in this round":
     "Number of participants in this round",
+  "The maximum number of participating rounds for the day has been reached":
+    "The maximum number of participating rounds for the day has been reached",
 
   "Reward Total Amount": "Reward Total Amount",
   "Extra Reward Total Amount": "Reward Total Amount",
