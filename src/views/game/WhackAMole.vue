@@ -54,7 +54,7 @@
                 </span>
               </v-card-title>
               <v-divider></v-divider>
-              <v-card-text>
+              <v-card-text v-if="isInWhiteList">
                 <v-card-text>
                   <v-row align="center">
                     <v-col class="subtitle-1" cols="12">
@@ -131,6 +131,25 @@
                     {{
                       $t(
                         "You have reached the number of times you can participate"
+                      )
+                    }}
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-card-text v-else>
+                <v-row align="center">
+                  <v-col class="subtitle-1" cols="12">
+                    {{ $t("The current account is not in white") }}
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-text>
+                <v-row align="center">
+                  <v-col class="subtitle-2" cols="12" style="color: #ff5252">
+                    {{
+                      $t(
+                        "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk."
                       )
                     }}
                   </v-col>
@@ -216,7 +235,12 @@
 
 <script>
 import clip from "@/utils/clipboard";
-import { DAOAddress, WhackAMoleContractAddress } from "@/constants";
+import {
+  DAOAddress,
+  WhackAMoleContractAddress,
+  WHITE_LISTS_SWITCH,
+  WHITE_LISTS
+} from "@/constants";
 import { getContractByABI, weiToEther, etherToWei } from "@/utils/web3";
 // 引入合约 ABI 文件
 import ERC20_abi from "@/constants/contractJson/ERC20_abi.json";
@@ -229,6 +253,7 @@ export default {
     DAOAddress,
     tokenSymbol: "DAO",
     rewardTokenSymbol: "DST",
+    isInWhiteList: false,
     // 合约信息
     contractInfo: {
       token: null
@@ -377,6 +402,8 @@ export default {
       const conditions = await contract.methods.queryConditionsOfJoin().call({
         from: this.address
       });
+      this.isInWhiteList =
+        WHITE_LISTS_SWITCH && WHITE_LISTS.indexOf(this.address) > -1;
       this.isOpen = conditions[0];
       this.hasJoined = conditions[1];
       this.timesOfJoin.canJoinTimes = parseInt(conditions[2]);

@@ -119,7 +119,8 @@ export default {
   "Total Mining Reward Amount": {
     "Accumulated participation in mining": "累计参与挖矿",
     "Accumulated mining rewards": "累计挖矿奖励",
-    "Inviting mining rewards": "邀请TA挖矿奖励"
+    "Inviting mining rewards": "邀请TA挖矿奖励",
+    "DFT rewards amount": "累计挖矿奖励DFT"
   },
 
   FarmingGame: "DFT",
@@ -147,5 +148,9 @@ export default {
     "The amount is required": "请填写兑换额度"
   },
   "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim.":
-    "当日24点前未领取的视为自动放弃领取。"
+    "当日24点前未领取的视为自动放弃领取。",
+
+  "The current account is not in white": "当前账号不在白名单中",
+  "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk.":
+    "仅供测试，不对社区外流通，不用于商业用途，不构成投资建议，内测风险需要用户自行承担。"
 };

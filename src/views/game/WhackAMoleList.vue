@@ -40,6 +40,10 @@
                       $t("Total Mining Reward Amount.Inviting mining rewards")
                     }}DAO： {{ totalAmount.totalInviterRewardAmount }}
                   </p>
+                  <p>
+                    {{ $t("Total Mining Reward Amount.DFT rewards amount") }}：
+                    {{ totalAmount.totalClaimedDFTAmount }}
+                  </p>
                 </v-col>
               </v-row>
             </v-card-text>
@@ -198,7 +202,8 @@ export default {
       totalJoinAmount: 0,
       totalJoinBackAmount: 0,
       totalJoinRewardAmount: 0,
-      totalInviterRewardAmount: 0
+      totalInviterRewardAmount: 0,
+      totalClaimedDFTAmount: 0
     },
     // 提示框
     operationResult: {
@@ -302,6 +307,15 @@ export default {
       );
       this.totalAmount.totalInviterRewardAmount = weiToEther(
         totalAmountInfo[3],
+        this.web3
+      );
+      const totalClaimedDFTAmount = await contract.methods
+        .queryClaimedDFTAmountBySourceAndAccount()
+        .call({
+          from: this.address
+        });
+      this.totalAmount.totalClaimedDFTAmount = weiToEther(
+        totalClaimedDFTAmount,
         this.web3
       );
       const resResult = await contract.methods

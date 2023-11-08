@@ -125,7 +125,8 @@ export default {
     "Accumulated participation in mining":
       "Accumulated participation in mining",
     "Accumulated mining rewards": "Accumulated mining rewards",
-    "Inviting mining rewards": "Inviting mining rewards"
+    "Inviting mining rewards": "Inviting mining rewards",
+    "DFT rewards amount": "Accumulated mining reward DFT"
   },
 
   FarmingGame: "DFT",
@@ -147,5 +148,9 @@ export default {
   "Insufficient balance": "Insufficient balance",
   "Exchange Success": "Exchange Success",
   "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim.":
-    "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim."
+    "Those who have not been claimed before 24:00 on the same day shall be deemed to have automatically waived their claim.",
+
+  "The current account is not in white": "The current account is not in white",
+  "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk.":
+    "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk."
 };
