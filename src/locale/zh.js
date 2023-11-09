@@ -152,5 +152,21 @@ export default {
 
   "The current account is not in white": "当前账号不在白名单中",
   "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk.":
-    "仅供测试，不对社区外流通，不用于商业用途，不构成投资建议，内测风险需要用户自行承担。"
+    "仅供测试，不对社区外流通，不用于商业用途，不构成投资建议，内测风险需要用户自行承担。",
+
+  "By participating, you acknowledge that you have read and agree to the following":
+    "参与即代表已阅读并同意以下",
+  "statements and agreements": "声明与协议",
+  "Declarations and agreements": "声明与协议",
+  "The farm is a DAPP, there is no centralization, please read the following rules of the farm to participate voluntarily and at your own risk, and please comply with the relevant regulations of your country and region.":
+    "农场为DAPP，没有任何中心化，请仔细阅读以下农场规则后自愿参与并自行承担相应风险，同时请您遵守所在国家和地区相关规定。",
+  "Farm rules:": "农场规则：",
+  "1, each person pledges 150 DAO to start a round of mining, full 30 people this round ends;":
+    "1，每人质押150枚DAO，开启一轮挖矿，满30人此轮结束；",
+  "2, each round of mining 1 person's DAO will be played into the reward pool, an additional 180 DST and an equal share of the release of the day's DFT;":
+    "2，每轮挖中1人的DAO将打入奖励矿池，额外获得180枚DST并平分当天释放的DFT；",
+  "3, the others who didn't win will get 1.5 DAO from the bonus pool;":
+    "3，其它未挖中的从奖励矿池中每人获得1.5枚DAO奖励；",
+  "4, 40 pieces from the reward pool will be injected into the DFT pool and the remaining DAO will be destroyed.":
+    "4，奖励矿池中40枚注入DFT矿池，剩余DAO销毁。"
 };

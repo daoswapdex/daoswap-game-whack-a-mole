@@ -3,6 +3,7 @@ export {
   parseTime,
   formatTime,
   formatSeconds,
+  formatSecondsNormal,
   formatCountdown,
   ellipseAddress,
   keepNumber

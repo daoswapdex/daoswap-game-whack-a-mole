@@ -152,5 +152,21 @@ export default {
 
   "The current account is not in white": "The current account is not in white",
   "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk.":
-    "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk."
+    "Only for test, not for users out of Aurora Community, not for business use, not for financial advice, users need to take the responsibility of test risk.",
+
+  "By participating, you acknowledge that you have read and agree to the following":
+    "By participating, you acknowledge that you have read and agree to the following",
+  "statements and agreements": "statements and agreements",
+  "Declarations and agreements": "Declarations and agreements",
+  "The farm is a DAPP, there is no centralization, please read the following rules of the farm to participate voluntarily and at your own risk, and please comply with the relevant regulations of your country and region.":
+    "The farm is a DAPP, there is no centralization, please read the following rules of the farm to participate voluntarily and at your own risk, and please comply with the relevant regulations of your country and region.",
+  "Farm rules:": "Farm rules:",
+  "1, each person pledges 150 DAO to start a round of mining, full 30 people this round ends;":
+    "1, each person pledges 150 DAO to start a round of mining, full 30 people this round ends;",
+  "2, each round of mining 1 person's DAO will be played into the reward pool, an additional 180 DST and an equal share of the release of the day's DFT;":
+    "2, each round of mining 1 person's DAO will be played into the reward pool, an additional 180 DST and an equal share of the release of the day's DFT;",
+  "3, the others who didn't win will get 1.5 DAO from the bonus pool;":
+    "3, the others who didn't win will get 1.5 DAO from the bonus pool;",
+  "4, 40 pieces from the reward pool will be injected into the DFT pool and the remaining DAO will be destroyed.":
+    "4, 40 pieces from the reward pool will be injected into the DFT pool and the remaining DAO will be destroyed."
 };

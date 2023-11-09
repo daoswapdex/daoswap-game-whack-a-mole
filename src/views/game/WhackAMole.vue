@@ -21,10 +21,14 @@
                     {{ tokenSymbol }}
                   </p>
                   <p>
-                    {{ $t("Game start time") }}：{{ startTime | formatSeconds }}
+                    {{ $t("Game start time") }}：{{
+                      startTime | formatSecondsNormal
+                    }}
                   </p>
                   <p>
-                    {{ $t("Game end time") }}：{{ endTime | formatSeconds }}
+                    {{ $t("Game end time") }}：{{
+                      endTime | formatSecondsNormal
+                    }}
                   </p>
                   <p>
                     {{ $t("Number of participants per round") }}：{{
@@ -140,6 +144,21 @@
                 <v-row align="center">
                   <v-col class="subtitle-1" cols="12">
                     {{ $t("The current account is not in white") }}
+                  </v-col>
+                </v-row>
+              </v-card-text>
+              <v-divider></v-divider>
+              <v-card-text>
+                <v-row align="center">
+                  <v-col class="body-2" cols="12">
+                    {{
+                      $t(
+                        "By participating, you acknowledge that you have read and agree to the following"
+                      )
+                    }}
+                    <v-btn plain to="/agreement" color="indigo">
+                      {{ $t("statements and agreements") }}
+                    </v-btn>
                   </v-col>
                 </v-row>
               </v-card-text>

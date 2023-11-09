@@ -5,7 +5,7 @@ export const WhackAMoleContractAddress = [
   },
   {
     chainId: 56,
-    address: "0x4751253a11D05453883D66a1E6560e1dF2CE8947"
+    address: "0x663128E848306cAF4CD7f68eF33Ad0ED1592AB0F"
   }
 ];
 
